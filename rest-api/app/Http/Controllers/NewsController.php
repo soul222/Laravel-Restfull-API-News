@@ -133,19 +133,55 @@ class NewsController extends Controller
 
     /**
      * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  string  $id
-     * @return \Illuminate\Http\JsonResponse
      */
     public function update(Request $request, string $id)
     {
         try {
-            // Menemukan berita berdasarkan ID
-            $news = News::find($id);
-
-            // Jika berita ditemukan, siapkan respons JSON dengan pesan dan data berita yang diperbarui
+            // menemukan berita bedasarkan id
+            $news = news::find($id);
+// Jika berita ditemukan, siapkan respons JSON dengan pesan dan data berita diperbarui
             if ($news) {
                 $response = [
                     'message' => 'Resource is added successfully',
-                    'data' => $
+                    'data' => $news->update($request->all()),
+                ];
+
+                return response()->json($response, 200);
+            } else {
+                throw new \Exception('Resource not found');
+            }
+        } catch (\Exception $e) {
+            $response = [
+                'message' => $e->getMessage(),
+            ];
+            return response()->json($response, 400);
+        }
+    }
+
+    /**
+     * Remove the specified resource from storage.
+     */
+    public function destroy(string $id)
+    {
+        try {
+            // menemukan berita bedasarkan id
+            $news = news::find($id);
+// Jika berita ditemukan, siapkan respons JSON dengan pesan dan data berita dihapus
+            if ($news) {
+                $response = [
+                    'message' => 'Resource is delete successfully',
+                    'data' => $news->delete(),
+                ];
+
+                return response()->json($response, 200);
+            } else {
+                throw new \Exception('Data not found');
+            }
+        } catch (\Exception $e) {
+            $response = [
+                'message' => $e->getMessage(),
+            ];
+            return response()->json($response, 404);
+        }
+    }
+}
