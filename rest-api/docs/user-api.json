@@ -1,8 +1,8 @@
 {
     "openapi": "3.0.3",
     "info": {
-        "title": "User",
-        "description": "User",
+        "title": "User Authorization",
+        "description": "User Authorization",
         "version": "1.0.0"
     },
     "server": [
@@ -11,7 +11,7 @@
         }
     ],
     "paths": {
-        "/api/users" : {
+        "/api/register" : {
             "post": {
                 "description": "Register new user",
                 "requestBody": {
@@ -21,7 +21,7 @@
                                 "soultan": {
                                     "dscription": "Register user soultan",
                                     "value": {
-                                        "username": "soultan",
+                                        "name": "soultan",
                                         "password": "Wnakmi42",
                                         "name": "Soultan Amirul Mukminin"
                                     }
@@ -30,10 +30,10 @@
                             "schema": {
                                 "type": "object",
                                 "requires": [
-                                    "name", "password", "username"
+                                    "name", "password", "name"
                                 ],
                                 "properties": {
-                                    "username": {
+                                    "name": {
                                         "type": "string"
                                     },
                                     "password": {
@@ -57,9 +57,9 @@
                                         "description": "validation error",
                                         "value": {
                                             "errors": {
-                                                "username": [
-                                                    "username must no be blank",
-                                                    "username min 6 character"
+                                                "name": [
+                                                    "name must no be blank",
+                                                    "name min 6 character"
                                                 ]
                                             }
                                         }
@@ -74,7 +74,7 @@
                             "data": {
                                 "id": 1,
                                 "name": "Soultan Amirul Mukminin",
-                                "username": "soultan"
+                                "name": "soultan"
                             }
                         },
                         "content": {
@@ -110,7 +110,7 @@
                 }
             }
         },
-        "/api/users/login": {
+        "/api/login": {
             "post": {
                 "description": "Login user",
                 "requestBody": {
@@ -119,7 +119,7 @@
                             "schema": {
                                 "type": "object",
                                 "properties": {
-                                    "username": {
+                                    "name": {
                                         "type": "string"
                                     },
                                     "password": {
@@ -144,7 +144,7 @@
                                                 "id": {
                                                     "type": "number"
                                                 },
-                                                "username": {
+                                                "name": {
                                                     "type": "string"
                                                 },
                                                 "name": {
@@ -166,7 +166,7 @@
                 }
             }
         },
-        "/api/users/current": {
+        "/api/user/": {
             "get": {
                 "description": "Get current user",
                 "parameters": [
@@ -189,7 +189,7 @@
                                                 "id": {
                                                     "type": "number"
                                                 },
-                                                "username": {
+                                                "name": {
                                                     "type": "string"
                                                 },
                                                 "name": {
@@ -247,7 +247,7 @@
                                                 "id": {
                                                     "type": "number"
                                                 },
-                                                "username": {
+                                                "name": {
                                                     "type": "string"
                                                 },
                                                 "name": {
@@ -266,7 +266,7 @@
                 }
             }
         },
-        "/api/users/logout": {
+        "/api/logout": {
             "delete": {
                 "description": "Delete current user",
                 "parameters": [
