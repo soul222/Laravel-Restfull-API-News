@@ -1,0 +1,266 @@
+{
+    "openapi": "3.0.3",
+    "info": {
+        "title": "authors API",
+        "description": "authors API",
+        "version": "1.0.0"
+    },
+    "servers": [
+        {
+            "url": "http://localhost:8000"
+        }
+    ],
+    "paths": {
+        "/api/authors/{id}/": {
+            "post": {
+                "description": "Create new authors",
+                "parameters": [
+                    {
+                        "name": "Authorization",
+                        "in": "header"
+                    },
+                    {
+                        "name": "idAuthors",
+                        "in": "path"
+                    }
+                ],
+                "requestBody": {
+                    "description": "Create new authors",
+                    "content": {
+                        "application/json" : {
+                            "schema": {
+                                "type": "object",
+                                "properties": {
+                                    "name" : {
+                                        "type": "string"
+                                    }
+                                }
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "201": {
+                        "description": "Success create authors",
+                        "content": {
+                            "application/json" : {
+                                "schema": {
+                                    "type": "object",
+                                    "properties": {
+                                        "data" : {
+                                            "type": "object",
+                                            "properties": {
+                                                "id" : {
+                                                    "type": "number"
+                                                },
+                                                "name" : {
+                                                    "type": "string"
+                                                }
+                                            }
+                                        },
+                                        "errors" : {
+                                            "type": "object"
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            },
+            "get": {
+                "description": "Get list addresses",
+                "parameters": [
+                    {
+                        "name": "Authorization",
+                        "in": "header"
+                    },
+                    {
+                        "name": "idAuthors",
+                        "in": "path"
+                    }
+                ],
+                "responses": {
+                    "200" : {
+                        "description": "List authors",
+                        "content": {
+                            "application/json" : {
+                                "schema": {
+                                    "type": "object",
+                                    "properties": {
+                                        "data": {
+                                            "type": "array",
+                                            "items": {
+                                                "type": "object",
+                                                "properties": {
+                                                    "id" : {
+                                                        "type": "number"
+                                                    },
+                                                    "name" : {
+                                                        "type": "string"
+                                                    }
+                                                }
+                                            }
+                                        },
+                                        "errors" : {
+                                            "type": "object"
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/api/authors/{id}": {
+            "get": {
+                "description": "Get authors",
+                "parameters": [
+                    {
+                        "name": "Authorization",
+                        "in": "header"
+                    },
+                    {
+                        "name": "idNews",
+                        "in": "path"
+                    },
+                    {
+                        "name": "idAuthors",
+                        "in": "path"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Success create address",
+                        "content": {
+                            "application/json" : {
+                                "schema": {
+                                    "type": "object",
+                                    "properties": {
+                                        "data" : {
+                                            "type": "object",
+                                            "properties": {
+                                                "id" : {
+                                                    "type": "number"
+                                                },
+                                                "name" : {
+                                                    "type": "string"
+                                                }
+                                            }
+                                        },
+                                        "errors" : {
+                                            "type": "object"
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            },
+            "put": {
+                "description": "Update authors",
+                "parameters": [
+                    {
+                        "name": "Authorization",
+                        "in": "header"
+                    },
+                    {
+                        "name": "idNews",
+                        "in": "path"
+                    },
+                    {
+                        "name": "idAuthors",
+                        "in": "path"
+                    }
+                ],
+                "requestBody": {
+                    "description": "Update existing news authors",
+                    "content": {
+                        "application/json" : {
+                            "schema": {
+                                "type": "object",
+                                "properties": {
+                                    "name" : {
+                                        "type": "string"
+                                    }
+                                }
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Success create authors",
+                        "content": {
+                            "application/json" : {
+                                "schema": {
+                                    "type": "object",
+                                    "properties": {
+                                        "data" : {
+                                            "type": "object",
+                                            "properties": {
+                                                "id" : {
+                                                    "type": "number"
+                                                },
+                                                "name" : {
+                                                    "type": "string"
+                                                }
+                                            }
+                                        },
+                                        "errors" : {
+                                            "type": "object"
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            },
+            "delete": {
+                "description": "Delete authors",
+                "parameters": [
+                    {
+                        "name": "Authorization",
+                        "in": "header"
+                    },
+                    {
+                        "name": "idNews",
+                        "in": "path"
+                    },
+                    {
+                        "name": "idAuthors",
+                        "in": "path"
+                    }
+                ],
+                "responses": {
+                    "200" : {
+                        "description": "Success delete",
+                        "content": {
+                            "application/json" : {
+                                "schema": {
+                                    "type": "object",
+                                    "properties": {
+                                        "data" : {
+                                          "id": {
+                                              "type":"number"
+                                          },
+                                          "name" : {
+                                              "type": "string"
+                                          }
+                                        },
+                                        "errors" : {
+                                            "type": "object"
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }
+}
