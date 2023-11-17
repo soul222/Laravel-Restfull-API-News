@@ -5,6 +5,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\NewsController;
 use App\Http\Controllers\AuthorsController;
 use App\Http\Controllers\CategoriesController;
+use App\Http\Controllers\AuthController;
 use App\Models\categories;
 use PharIo\Manifest\Author;
 
@@ -19,26 +20,42 @@ use PharIo\Manifest\Author;
 |
 */
 
-Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
-    return $request->user();
+Route::post('/register', [AuthController::class, 'register']);
+Route::post('/login', [AuthController::class, 'login'])->name('login');
+
+Route::middleware('auth:sanctum')->group(function () {
+
+    Route::get('/user', [AuthController::class, 'getUser']);
+    // Route NewsController
+    Route::prefix('news')->group(function () {
+        Route::get('', [NewsController::class, 'index']);
+        Route::get('/{id}', [NewsController::class, 'show']);
+        Route::post('', [NewsController::class, 'store']);
+        Route::put('/{id}', [NewsController::class, 'update']);
+        Route::delete('/{id}', [NewsController::class, 'destroy']);
+    });
+    
+    // Route AuthorsController
+    Route::prefix('/authors')->group(function () {
+        Route::get('', [AuthorsController::class, 'index']);
+        Route::get('/{id}', [AuthorsController::class, 'show']);
+        Route::post('', [AuthorsController::class, 'store']);
+        Route::put('/{id}', [AuthorsController::class, 'update']);
+        Route::delete('/{id}', [AuthorsController::class, 'destroy']);
+    });
+    
+    // Route CategoriesController
+    Route::prefix('/categories')->group(function () {
+        Route::get('', [CategoriesController::class, 'index']);
+        Route::get('/{id}', [CategoriesController::class, 'show']);
+        Route::post('', [CategoriesController::class, 'store']);
+        Route::put('/{id}', [CategoriesController::class, 'update']);
+        Route::delete('/{id}', [CategoriesController::class, 'destroy']);
+    });
+
+    Route::post('/logout', [AuthController::class, 'logout']);
 });
 
-// Route Berita
 
-Route::get('/news', [NewsController::class, 'index']);
-Route::get('/news/{id}', [NewsController::class, 'show']);
-Route::post('/news', [NewsController::class, 'store']);
-Route::put('/news/{id}', [NewsController::class, 'update']);
-Route::delete('/news/{id}', [NewsController::class, 'destroy']);
 
-Route::get('/authors', [AuthorsController::class, 'index']);
-Route::get('/authors/{id}', [AuthorsController::class, 'show']);
-Route::post('/authors', [AuthorsController::class, 'store']);
-Route::put('/authors/{id}', [AuthorsController::class, 'update']);
-Route::delete('/authors/{id}', [AuthorsController::class, 'destroy']);
 
-Route::get('/categories', [CategoriesController::class, 'index']);
-Route::get('/categories/{id}', [CategoriesController::class, 'show']);
-Route::post('/categories', [CategoriesController::class, 'store']);
-Route::put('/categories/{id}', [CategoriesController::class, 'update']);
-Route::delete('/categories/{id}', [CategoriesController::class, 'destroy']);
