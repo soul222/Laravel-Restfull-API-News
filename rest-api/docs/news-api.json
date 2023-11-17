@@ -1,0 +1,450 @@
+{
+    "openapi": "3.0.3",
+    "info": {
+        "title": "news API",
+        "description": "news API",
+        "version": "1.0.0"
+    },
+    "servers": [
+        {
+            "url": "http://localhost:8000"
+        }
+    ],
+    "paths": {
+        "/api/news": {
+            "post": {
+                "description": "Create new news,
+                "parameters": [
+                    {
+                        "name": "Authorization",
+                        "in": "header"
+                    }
+                ],
+                "requestBody": {
+                    "description": "Create new categories",
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "type": "object",
+                                "properties": {
+                                    "title": {
+                                        "type": "string"
+                                    },
+                                    "description": {
+                                        "type": "text"
+                                    },
+                                    "content": {
+                                        "type": "text"
+                                    },
+                                    "url": {
+                                        "type": "string"
+                                    },
+                                    "image_url": {
+                                        "type": "string"
+                                    },
+                                    "published": {
+                                        "type": "datetime"
+                                    },
+                                    "author_id": {
+                                        "type": "number"
+                                    },
+                                    "category_id": {
+                                        "type": "number"
+                                    },
+                                    "creted_at": {
+                                        "type": "timestamp"
+                                    },
+                                    "updated_at": {
+                                        "type": "timestamp"
+                                    }
+                                }
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "201": {
+                        "description": "Success create news",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object",
+                                    "properties": {
+                                        "data": {
+                                            "type": "object",
+                                            "properties": {
+                                                "id": {
+                                                    "type": "number"
+                                                },
+                                                 "title": {
+                                                    "type": "string"
+                                                },
+                                                "description": {
+                                                    "type": "text"
+                                                },
+                                                "content": {
+                                                    "type": "text"
+                                                },
+                                                "url": {
+                                                    "type": "string"
+                                                },
+                                                "image_url": {
+                                                    "type": "string"
+                                                },
+                                                "published": {
+                                                    "type": "datetime"
+                                                },
+                                                "author_id": {
+                                                    "type": "number"
+                                                },
+                                                "category_id": {
+                                                    "type": "number"
+                                                },
+                                                "creted_at": {
+                                                    "type": "timestamp"
+                                                },
+                                                "updated_at": {
+                                                    "type": "timestamp"
+                                                }
+                                            }
+                                        },
+                                        "errors": {
+                                            "type": "object"
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            },
+            "get": {
+                "description": "Search Tittle or Category",
+                "parameters": [
+                    {
+                        "name": "Authorization",
+                        "in": "header"
+                    },
+                    {
+                        "name": "title",
+                        "in": "query"
+                    },
+                    {
+                        "name": "category",
+                        "in": "query"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Success search title or categeory",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object",
+                                    "properties": {
+                                        "data": {
+                                            "type": "array",
+                                            "items": {
+                                                "type": "object",
+                                                "properties": {
+                                                    "id": {
+                                                        "type": "number"
+                                                    }, 
+                                                    "title": {
+                                                        "type": "string"
+                                                    },
+                                                    "description": {
+                                                        "type": "text"
+                                                    },
+                                                    "content": {
+                                                        "type": "text"
+                                                    },
+                                                    "url": {
+                                                        "type": "string"
+                                                    },
+                                                    "image_url": {
+                                                        "type": "string"
+                                                    },
+                                                    "published": {
+                                                        "type": "datetime"
+                                                    },
+                                                    "author_id": {
+                                                        "type": "number"
+                                                    },
+                                                    "category_id": {
+                                                        "type": "number"
+                                                    },
+                                                    "creted_at": {
+                                                        "type": "timestamp"
+                                                    },
+                                                    "updated_at": {
+                                                        "type": "timestamp"
+                                                    }
+                                                }
+                                            }
+                                        },
+                                        "errors": {
+                                            "type": "object"
+                                        },
+                                        "meta": {
+                                            "type": "object"
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/api/news/{id}": {
+            "put": {
+                "description": "Update news",
+                "parameters": [
+                    {
+                        "name": "Authorization",
+                        "in": "header"
+                    },
+                    {
+                        "name": "id",
+                        "in": "path"
+                    }
+                ],
+                "requestBody": {
+                    "description": "Update news",
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "type": "object",
+                                "properties": {
+                                     "title": {
+                                        "type": "string"
+                                    },
+                                    "description": {
+                                        "type": "text"
+                                    },
+                                    "content": {
+                                        "type": "text"
+                                    },
+                                    "url": {
+                                        "type": "string"
+                                    },
+                                    "image_url": {
+                                        "type": "string"
+                                    },
+                                    "published": {
+                                        "type": "datetime"
+                                    },
+                                    "author_id": {
+                                        "type": "int"
+                                    },
+                                    "category_id": {
+                                        "type": "int"
+                                    },
+                                    "creted_at": {
+                                        "type": "timestamp"
+                                    },
+                                    "updated_at": {
+                                        "type": "timestamp"
+                                    }
+                                }
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Success update news",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object",
+                                    "properties": {
+                                        "data": {
+                                            "type": "object",
+                                            "properties": {
+                                                "id": {
+                                                    "type": "number"
+                                                },
+                                                 "title": {
+                                                    "type": "string"
+                                                },
+                                                "description": {
+                                                    "type": "text"
+                                                },
+                                                "content": {
+                                                    "type": "text"
+                                                },
+                                                "url": {
+                                                    "type": "string"
+                                                },
+                                                "image_url": {
+                                                    "type": "string"
+                                                },
+                                                "published": {
+                                                    "type": "datetime"
+                                                },
+                                                "author_id": {
+                                                    "type": "int"
+                                                },
+                                                "category_id": {
+                                                    "type": "int"
+                                                },
+                                                "creted_at": {
+                                                    "type": "timestamp"
+                                                },
+                                                "updated_at": {
+                                                    "type": "timestamp"
+                                                }
+                                            }
+                                        },
+                                        "errors": {
+                                            "type": "object"
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            },
+            "get": {
+                "description": "Get news",
+                "parameters": [
+                    {
+                        "name": "Authorization",
+                        "in": "header"
+                    },
+                    {
+                        "name": "id",
+                        "in": "path"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Success get news",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object",
+                                    "properties": {
+                                        "data": {
+                                            "type": "object",
+                                            "properties": {
+                                                "id": {
+                                                    "type": "number"
+                                                },
+                                                "title": {
+                                                    "type": "string"
+                                                },
+                                                "description": {
+                                                    "type": "text"
+                                                },
+                                                "content": {
+                                                    "type": "text"
+                                                },
+                                                "url": {
+                                                    "type": "string"
+                                                },
+                                                "image_url": {
+                                                    "type": "string"
+                                                },
+                                                "published": {
+                                                    "type": "datetime"
+                                                },
+                                                "author_id": {
+                                                    "type": "int"
+                                                },
+                                                "category_id": {
+                                                    "type": "int"
+                                                },
+                                                "creted_at": {
+                                                    "type": "timestamp"
+                                                },
+                                                "updated_at": {
+                                                    "type": "timestamp"
+                                                }
+                                            }
+                                        },
+                                        "errors": {
+                                            "type": "object"
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            },
+            "delete": {
+                "description": "Remove news",
+                "parameters": [
+                    {
+                        "name": "Authorization",
+                        "in": "header"
+                    },
+                    {
+                        "name": "id",
+                        "in": "path"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Success delete contact",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object",
+                                    "properties": {
+                                        "data": {
+                                            "type": "object",
+                                            "properties": {
+                                                  "properties": {
+                                                "id": {
+                                                    "type": "number"
+                                                },
+                                                "title": {
+                                                    "type": "string"
+                                                },
+                                                "description": {
+                                                    "type": "text"
+                                                },
+                                                "content": {
+                                                    "type": "text"
+                                                },
+                                                "url": {
+                                                    "type": "string"
+                                                },
+                                                "image_url": {
+                                                    "type": "string"
+                                                },
+                                                "published": {
+                                                    "type": "datetime"
+                                                },
+                                                "author_id": {
+                                                    "type": "int"
+                                                },
+                                                "category_id": {
+                                                    "type": "int"
+                                                },
+                                                "creted_at": {
+                                                    "type": "timestamp"
+                                                },
+                                                "updated_at": {
+                                                    "type": "timestamp"
+                                                }
+                                            }   
+                                        },
+                                        "errors": {
+                                            "type": "object"
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }
+}
