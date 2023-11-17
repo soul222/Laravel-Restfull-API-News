@@ -13,7 +13,7 @@
     "paths": {
         "/api/news": {
             "post": {
-                "description": "Create new news,
+                "description": "Create new news",
                 "parameters": [
                     {
                         "name": "Authorization",
