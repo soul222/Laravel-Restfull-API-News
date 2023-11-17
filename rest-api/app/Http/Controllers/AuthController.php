@@ -5,7 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use App\Models\User;
-use Illuminate\Support\Facades\Validator;
+use Illuminate\Support\Facades\Hash;
 
 class AuthController extends Controller
 {
@@ -15,59 +15,77 @@ class AuthController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\JsonResponse
      */
+    // Register
     public function register(Request $request)
     {
-        $validator = Validator::make($request->all(), [
-            'name' => 'required|string',
-            'email' => 'required|email|unique:users,email',
-            'password' => 'required|string|min:8',
-        ]);
+        try {
+            $data = $request->validate([
+                'name' => 'required|string|max:255',
+                'email' => 'required|email|unique:users,email',
+                'password' => 'required|string|min:8',
+            ]);
 
-        if ($validator->fails()) {
-            return response()->json(['error' => $validator->errors()], 422);
+            $data['password'] = Hash::make($data['password']);
+
+            $user = User::create($data);
+
+            $token = $user->createToken('auth_token')->plainTextToken;
+
+            return response()->json(['token' => $token, 'message' => 'User registered successfully'], 201);
+        } catch (\Exception $e) {
+            return response()->json(['message' => $e->getMessage()], 400);
         }
-
-        $user = User::create([
-            'name' => $request->input('name'),
-            'email' => $request->input('email'),
-            'password' => bcrypt($request->input('password')),
-        ]);
-        $token = $user->createToken('auth_token')->plainTextToken;
-        return response()->json([
-            'data' => $user,
-            'access_token_'=>$token,
-            'token_type' => 'Bearer',
-            'message' => 'User registered successfully', 'user' => $user
-        ], 201);
-
-
     }
 
-    /**
-     * Handle user login.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\JsonResponse
-     */
-    public function login(Request $request){
-        if(!Auth::attempt($request->only('email','password'))){
-            return response()->json([
-                "message"=>"Unauthorized"
-            ],401);
+    // Login
+    public function login(Request $request)
+    {
+        try {
+            $credentials = $request->validate([
+                'email' => 'required|email',
+                'password' => 'required|string',
+            ]);
+
+            if (Auth::attempt($credentials)) {
+                $user = $request->user();
+                $token = $user->createToken('auth_token', ['user:read'])->plainTextToken;
+
+                return response()->json(['token' => $token, 'user' => $user->name, 'message' => 'Login successful'], 200);
+            } else {
+                return response()->json(['message' => 'Invalid credentials'], 401);
+            }
+        } catch (\Exception $e) {
+            return response()->json(['message' => $e->getMessage()], 400);
         }
-        $user = User::where('email',$request->email)->firstOrFail();
-
-        $token = $user->createToken('auth_token')->plainTextToken;
-
-        return response()->json([
-            "message"=>"Login Success",
-            'Access_token'=>$token,
-            "token_type"=>"Bearer"
-        ]);
     }
 
-    /**
-     *  Handle User Logout
-    */
+    // Get Token
+    public function getUser(Request $request)
+    {
+        try {
+            $user = $request->user();
 
+            if ($user) {
+                $token = $user->createToken('auth_token', ['user:read'])->plainTextToken;
+
+                return response()->json(['token' => $token, 'user' => $user->name, 'message' => 'User session retrieved successfully'], 200);
+            } else {
+                throw new \Exception('Internal Service Error');
+            }
+        } catch (\Exception $e) {
+            return response()->json(['message' => $e->getMessage()], 500);
+        }
+    }
+
+    // Logout
+    public function logout(Request $request)
+    {
+        try {
+            $request->user()->tokens()->delete();
+
+            return response()->json(['message' => 'Logout successful']);
+        } catch (\Exception $e) {
+            return response()->json(['message' => $e->getMessage()], 500);
+        }
+    }
 }
