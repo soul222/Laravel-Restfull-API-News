@@ -163,3 +163,5 @@ class AuthorsController extends Controller
             ];
             return response()->json($response, 404);
         }
+    }
+}
