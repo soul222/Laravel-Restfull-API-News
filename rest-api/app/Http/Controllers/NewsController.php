@@ -9,17 +9,19 @@ class NewsController extends Controller
 {
     /**
      * Display a listing of the resource.
-     *
+     * fungsi menangkap semua data jika tidak ada parameter 'search' pada URL
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\JsonResponse
      */
     public function index(Request $request)
     {
         try {
-            // Mendapatkan nilai pencarian dari parameter 'search' pada URL
+            // Mendapatkan nilai pencarian dari parameter 'search' pada U
             $query = $request->input('search');
 
             // Melakukan pencarian berdasarkan judul atau kategori jika ada nilai pencarian
+            // jika tidak ada parameter "?search=title atau category" diurl akan menampilkan seluruh data
+            
             $news = News::when($query, function ($queryBuilder) use ($query) {
                 $queryBuilder->where('title', 'like', "%$query%")
                              ->orWhereHas('category', function ($categoryQuery) use ($query) {
@@ -28,7 +30,8 @@ class NewsController extends Controller
             })->with('author', 'category')->get();
 
             // Jika hasil pencarian kosong, lempar exception dengan pesan yang sesuai
-            if ($news->isEmpty()) {
+            
+        if ($news->isEmpty()) {
                 $message = $query ? "Data not found for the search: $query" : 'Data Empty';
                 throw new \Exception($message);
             }
